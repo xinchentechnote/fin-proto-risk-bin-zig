@@ -1,0 +1,16 @@
+.{
+    .name = .risk_binary,
+    .version = "0.2.0",
+    .fingerprint = 0x62be76112a5d286, // Derived from the package name by zig; do not copy between packages.
+    .minimum_zig_version = "0.17.0",
+    .dependencies = .{
+        .binary_codec = .{ .path = "../fin-proto-runtime-bin-zig" },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "proto",
+        "tests",
+    },
+}
