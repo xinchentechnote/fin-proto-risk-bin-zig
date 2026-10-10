@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: repo
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: repo
+
+      # build.zig.zon resolves binary_codec via the relative path
+      # ../fin-proto-runtime-bin-zig, so check it out as a sibling directory
+      - name: Checkout fin-proto-runtime-bin-zig
+        uses: actions/checkout@v4
+        with:
+          repository: xinchentechnote/fin-proto-runtime-bin-zig
+          path: fin-proto-runtime-bin-zig
+
+      - uses: mlugg/setup-zig@v2
+        with:
+          version: 0.17.0
+
+      - name: Run tests
+        run: zig build test
