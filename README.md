@@ -17,9 +17,9 @@ make compile    # fin-protoc -f proto/risk_v0.2.0.pdsl -z src/
   TsNs u64 / BodyLen u32(@lengthOf 回填)/ Checksum u32`
 - `Checksum` 为普通字段(帧体字节累加 & 0xFF,由应用层计算/校验,
   flags.NO_CHECKSUM 时置 0),不走 `@calculatedFrom` 自动填充
-- `match MsgType as Body` 分发 9 种帧体:事前校验流(NewOrderReq/CancelReq、
-  RiskResult)、回报转发流(OrderConfirm/TradeReport/CancelReject/OrderReject)、
-  实时指令流(Instruction/InstrAck)
+- `match MsgType as Body` 分发 9 种帧体:事前校验流(NewOrderReq/CancelReq)、
+  风控结果同步应答(RiskResult)、回报转发流(OrderConfirm/TradeReport/
+  CancelReject/OrderReject)、实时指令流(Instruction/InstrAck)
 
 ## 互通测试
 
